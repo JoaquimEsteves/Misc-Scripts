@@ -5,11 +5,20 @@ GREEN=$(printf '\033[0;32m')
 NC=$(printf '\033[0m') # No Color
 
 status=$(git status -sb)
-echo "$status" | head -n 1
-for filter in A C D M R T U X B
-    do git diff --staged --diff-filter="$filter" --stat | tac | tail -n +2 | tac | sed "s/.*/${GREEN}${filter}${NC} &/"
-done
-for filter in A C D M R T U X B
-    do git diff --diff-filter="$filter" --stat | tac | tail -n +2 | tac | sed "s/.*/${RED}${filter}${NC} &/"
-done
+
+function listAll() {
+    for filter in A C D M R T U X B; do
+        git diff $(test "$1" == "staged" && echo "--staged" || echo '') --diff-filter="$filter" --stat \
+        | tac \
+        | tail -n +2 \
+        | tac \
+        | sed "s/.*/$(test "$1" == "staged" && echo "$GREEN" || echo "$RED")${filter}${NC} &/"
+    done
+}
+
+echo "$status" | head -n 1 | sed "s/##//g" | sed "s/\.\.\./ 💽 ... 🌐 /g"
+echo "$GREEN$(git diff --shortstat --staged)"
+echo "$RED$(git diff --shortstat)"
+listAll staged
+listAll
 echo "$status" | grep "??"
