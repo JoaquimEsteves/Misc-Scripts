@@ -6,7 +6,16 @@ function prettier_and_eslint() {
 }
 
 function entrFind() {
+	echo 'Looking for all JS/JSX files'
 	fdfind -e js -e jsx -x echo {} | entr -s -p -c 'npx prettier --write $0; npx eslint --cache $0'
+}
+
+function entrPrettier() {
+	fdfind -e js -e jsx -x echo {} | entr -s -p -c 'npx prettier --write $0'
+}
+
+function prettyEverything() {
+	fdfind -e js -e jsx -x npx prettier --write ./{}
 }
 
 # This file is a modulino! Meaning that it'll do something different depending

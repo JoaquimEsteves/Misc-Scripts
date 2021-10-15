@@ -16,9 +16,12 @@ function listAll() {
     done
 }
 
+# see: https://github.com/LuRsT/hr
+hr -
 echo "$status" | head -n 1 | sed "s/##//g" | sed "s/\.\.\./ 💽 ... 🌐 /g"
 echo "$GREEN$(git diff --shortstat --staged)"
 echo "$RED$(git diff --shortstat)"
 listAll staged
 listAll
 echo "$status" | grep "??"
+hr -
