@@ -11,6 +11,7 @@ set -e
 git fetch
 
 branches_to_remove=$(git for-each-ref --format='%(refname:short)' refs/heads)
-branches_to_remove=$branches_to_remove | grep -v "master|main|develop|staging"
 
-git branch -d $branches_to_remove 
+branches_to_remove=$(echo $branches_to_remove | tr ' ' '\n' | command grep -v "master\|main\|develop\|staging")
+
+git branch -d $branches_to_remove
