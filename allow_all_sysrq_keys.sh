@@ -4,4 +4,5 @@
 # Then you're limited in what you can do through the all mighty sysrq.
 # This script will remedy that.
 # Read more: https://linuxconfig.org/how-to-enable-all-sysrq-functions-on-linux
+echo "ALLOWING ALL SYSRQ FUNCTIONS"
 echo "1" > /proc/sys/kernel/sysrq

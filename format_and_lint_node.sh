@@ -2,12 +2,18 @@
 
 function prettier_and_eslint() {
 	npx prettier --write "$1"
-	npx eslint --cache "$1" && echo 'ESLINT OK'
+	eslint_d --cache "$1" && echo 'ESLINT OK'
 }
 
 function entrFind() {
 	echo 'Looking for all JS/JSX files'
-	fdfind -e js -e jsx -x echo {} | entr -s -p -c 'npx prettier --write $0; npx eslint --cache $0'
+	fdfind -e js -e jsx -x echo {} | entr -s -p -c 'npx prettier --write $0; eslint_d --cache $0'
+}
+
+
+function entrEslint() {
+	echo 'Looking for all JS/JSX files'
+	fdfind -e js -e jsx -x echo {} | entr -s -p -c 'eslint_d --cache $0'
 }
 
 function entrPrettier() {
@@ -24,6 +30,6 @@ function prettyEverything() {
 # $ fd -e js -e jsx -x echo {} | entr -c -p ./format_and_lint.sh /_
 if [[ "${BASH_SOURCE[0]}" = "${0}" ]]; then
 	echo 'running eslint...'
-	npx eslint src
+	eslint_d src
 	entrFind
 fi

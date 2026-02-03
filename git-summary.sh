@@ -7,13 +7,13 @@ NC=$(printf '\033[0m') # No Color
 status=$(git status -sb)
 
 function listAll() {
-    for filter in A C D M R T U X B; do
-        git diff $(test "$1" == "staged" && echo "--staged" || echo '') --diff-filter="$filter" --stat \
-        | tac \
-        | tail -n +2 \
-        | tac \
-        | sed "s/.*/$(test "$1" == "staged" && echo "$GREEN" || echo "$RED")${filter}${NC} &/"
-    done
+  for filter in A C D M R T U X B; do
+    git diff $(test "$1" == "staged" && echo "--staged" || echo '') --diff-filter="$filter" --stat \
+      | tac \
+      | tail -n +2 \
+      | tac \
+      | sed "s/.*/$(test "$1" == "staged" && echo "$GREEN" || echo "$RED")${filter}${NC} &/"
+  done
 }
 
 # see: https://github.com/LuRsT/hr
